@@ -352,7 +352,7 @@ function bindFFmpeg(streamip, streamport, sdpData, ws) {
         '-i '+path.join(__dirname, streamip + '_' + streamport + '.sdp'),
         '-vcodec copy',
         '-acodec copy',
-        '-f flv rtmp://localhost/live/' + streamip + '_' + streamport
+        '-f flv rtmp://test.wenshitong.cn/live/' + streamip + '_' + streamport
     ].concat();
     console.log("ffmpeg_args:  "+ffmpeg_args.join(","));
     var child = spawn('ffmpeg', ffmpeg_args);
