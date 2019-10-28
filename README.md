@@ -42,3 +42,26 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+
+
+
+
+
+
+## Notice ##
+
+This is an old project,I just let it run.
+
+os: Ubuntu 16.04
+
+ffmpeg: 2.8.15
+
+node: v12.13.0
+
+test time: 2019/10/28
+
+test result:![image](https://github.com/oBears/kurento-rtmp/raw/master/img/test.png)
+
+please use your domain and kurento media server replace my;
