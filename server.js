@@ -348,14 +348,13 @@ a=rtpmap:96 H264/90000
 function bindFFmpeg(streamip, streamport, sdpData, ws) {
     fs.writeFileSync(streamip + '_' + streamport + '.sdp', sdpData);
     var ffmpeg_args = [
-        '-protocol_whitelist', 'file,udp,rtp',
-        '-i', path.join(__dirname, streamip + '_' + streamport + '.sdp'),
-        '-vcodec', 'copy',
-        '-acodec', 'copy',
-        '-f', 'flv',
-        'rtmp://localhost/live/' + streamip + '_' + streamport
-    ].join(" ");
-    console.log("ffmpeg_args:  "+ffmpeg_args);
+        '-protocol_whitelist file,udp,rtp',
+        '-i '+path.join(__dirname, streamip + '_' + streamport + '.sdp'),
+        '-vcodec copy',
+        '-acodec copy',
+        '-f flv rtmp://localhost/live/' + streamip + '_' + streamport
+    ].concat();
+    console.log("ffmpeg_args:  "+ffmpeg_args.join(","));
     var child = spawn('ffmpeg', ffmpeg_args);
     ws.send(JSON.stringify({
         id: 'rtmp',
