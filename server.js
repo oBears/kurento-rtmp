@@ -33,7 +33,7 @@ var path = require('path');
 var argv = minimist(process.argv.slice(2), {
     default: {
         as_uri: 'https://localhost:8443/',
-        ws_uri: 'ws://localhost:8888/kurento'
+        ws_uri: 'ws://119.23.234.230:8888/kurento'
     }
 });
 
@@ -98,9 +98,8 @@ var wss = new ws.Server({
 /*
  * Management of WebSocket messages
  */
-wss.on('connection', function (ws) {
+wss.on('connection', function (ws,request) {
     var sessionId = null;
-    var request = ws.upgradeReq;
     var response = {
         writeHead: {}
     };
