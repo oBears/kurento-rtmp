@@ -32,15 +32,15 @@ var path = require('path');
 
 var argv = minimist(process.argv.slice(2), {
     default: {
-        as_uri: 'https://localhost:8443/',
-        ws_uri: 'ws://119.23.234.230:8888/kurento'
+        as_uri: 'https://test.wenshitong.cn:8443/',
+        ws_uri: 'ws://test.wenshitong.cn:8888/kurento'
     }
 });
 
 var options =
     {
-        key: fs.readFileSync('keys/server.key'),
-        cert: fs.readFileSync('keys/server.crt')
+        key: fs.readFileSync('keys/2996595_test.wenshitong.cn.key'),
+        cert: fs.readFileSync('keys/2996595_test.wenshitong.cn.pem')
     };
 
 const rtmp_server_config = {
@@ -355,6 +355,7 @@ function bindFFmpeg(streamip, streamport, sdpData, ws) {
         '-f', 'flv',
         'rtmp://localhost/live/' + streamip + '_' + streamport
     ].concat();
+    console.log("ffmpeg_args:  "+ffmpeg_args);
     var child = spawn('ffmpeg', ffmpeg_args);
     ws.send(JSON.stringify({
         id: 'rtmp',
