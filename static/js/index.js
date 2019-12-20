@@ -59,7 +59,7 @@ ws.onmessage = function (message) {
 			break;
 		case "rtmp":
 			console.log('Recv rtmp request:', parsedMessage.message);
-			playrtmp('rtmp://' + location.hostname + parsedMessage.message);
+			playrtmp('http://' + location.hostname + parsedMessage.message);
 			break;
 		default:
 			if (state == I_AM_STARTING) {
@@ -83,12 +83,12 @@ function start() {
 		remoteVideo: videoOutput,
 		onicecandidate: onIceCandidate,
 		mediaConstraints: {
-      audio: true,
-      video: {
-        width: 620,
-        framerate: 15
-      }
-    }
+			audio: true,
+			video: {
+				width: 620,
+				framerate: 15
+			}
+		}
 	}
 
 	webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function (error) {
@@ -97,32 +97,19 @@ function start() {
 	});
 }
 function playrtmp(rtmpaddress) {
-	var parameters = {
-		src: rtmpaddress,
-		autoPlay: "true",
-		controlBarAutoHide: "true",
-		poster: "img/adobe.jpg",
-		javascriptCallbackFunction: "jsbridge"
-	};
-	console.log(parameters);
-	// Embed the player SWF:
-	swfobject.embedSWF(
-		"GrindPlayer.swf"
-		, "VideoElement"
-		, 480
-		, 360
-		, "10.2"
-		, "expressInstall.swf"
-		, parameters
-		,
-		{
-			allowFullScreen: "true",
-			wmode: "transparent"
-		}
-		, {
-			name: "GrindPlayer"
-		}
-	);
+
+	alert(rtmpaddress);
+	if (flvjs.isSupported()) {
+		var videoElement = document.getElementById('videoElement');
+		var flvPlayer = flvjs.createPlayer({
+			type: 'flv',
+			isLive: true,
+			url: rtmpaddress
+		});
+		flvPlayer.attachMediaElement(videoElement);
+		flvPlayer.load();
+		flvPlayer.play();
+	}
 }
 function onIceCandidate(candidate) {
 	console.log('Local candidate' + JSON.stringify(candidate));

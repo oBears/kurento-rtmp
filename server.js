@@ -352,12 +352,12 @@ function bindFFmpeg(streamip, streamport, sdpData, ws) {
         '-vcodec', 'copy',
         '-acodec', 'copy',
         '-f', 'flv',
-        'rtmp://test.wenshitong.cn/live/' + streamip + '_' + streamport
+        'rtmp://test.wenshitong.cn/myapp/' + streamip + '_' + streamport
     ].concat();    
     var child = spawn('ffmpeg', ffmpeg_args);
     ws.send(JSON.stringify({
         id: 'rtmp',
-        message: '/live/' + streamip + '_' + streamport
+        message: '/live?app=myapp&stream=' + streamip + '_' + streamport
     }));
     //ignore stdout
     //this.child.stdout.on('data', this.emit.bind(this, 'data'));
@@ -433,9 +433,15 @@ function onIceCandidate(sessionId, _candidate) {
     }
 }
 
+
+app.use(function(req,res,next){
+    res.header('Access-Control-Allow-Origin','*');//添加这句话就可以正常返回数据了
+    next();
+})
+
 app.use(express.static(path.join(__dirname, 'static')));
-var nms = new NodeMediaServer(rtmp_server_config);
-nms.run();
+// var nms = new NodeMediaServer(rtmp_server_config);
+// nms.run();
 process.on('uncaughtException', function (error) {
     console.log(error);
 });
