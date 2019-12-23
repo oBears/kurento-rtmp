@@ -38,10 +38,10 @@ var argv = minimist(process.argv.slice(2), {
 });
 
 var options =
-    {
-        key: fs.readFileSync('keys/2996595_test.wenshitong.cn.key'),
-        cert: fs.readFileSync('keys/2996595_test.wenshitong.cn.pem')
-    };
+{
+    key: fs.readFileSync('keys/2996595_test.wenshitong.cn.key'),
+    cert: fs.readFileSync('keys/2996595_test.wenshitong.cn.pem')
+};
 
 const rtmp_server_config = {
     rtmp: {
@@ -98,7 +98,7 @@ var wss = new ws.Server({
 /*
  * Management of WebSocket messages
  */
-wss.on('connection', function (ws,request) {
+wss.on('connection', function (ws, request) {
     var sessionId = null;
     var response = {
         writeHead: {}
@@ -348,12 +348,13 @@ a=rtpmap:96 H264/90000
 function bindFFmpeg(streamip, streamport, sdpData, ws) {
     fs.writeFileSync(streamip + '_' + streamport + '.sdp', sdpData);
     var ffmpeg_args = [
+        '-protocol_whitelist', 'file,udp,rtp',
         '-i', path.join(__dirname, streamip + '_' + streamport + '.sdp'),
         '-vcodec', 'copy',
-        '-acodec', 'copy',
+        '-acodec', 'aac',
         '-f', 'flv',
         'rtmp://test.wenshitong.cn/myapp/' + streamip + '_' + streamport
-    ].concat();    
+    ].concat();
     var child = spawn('ffmpeg', ffmpeg_args);
     ws.send(JSON.stringify({
         id: 'rtmp',
@@ -434,8 +435,8 @@ function onIceCandidate(sessionId, _candidate) {
 }
 
 
-app.use(function(req,res,next){
-    res.header('Access-Control-Allow-Origin','*');//添加这句话就可以正常返回数据了
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');//添加这句话就可以正常返回数据了
     next();
 })
 
