@@ -353,12 +353,12 @@ function bindFFmpeg(streamip, streamport, sdpData, ws) {
         '-vcodec', 'copy',
         '-acodec', 'aac',
         '-f', 'flv',
-        'rtmp://test.wenshitong.cn/myapp/' + streamip + '_' + streamport
+        'rtmp://test.wenshitong.cn:1935/live/s' + streamport
     ].concat();
     var child = spawn('ffmpeg', ffmpeg_args);
     ws.send(JSON.stringify({
         id: 'rtmp',
-        message: '/live?app=myapp&stream=' + streamip + '_' + streamport
+        message: 's' + streamport + '.flv'
     }));
     //ignore stdout
     //this.child.stdout.on('data', this.emit.bind(this, 'data'));

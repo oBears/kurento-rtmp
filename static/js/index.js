@@ -59,7 +59,7 @@ ws.onmessage = function (message) {
 			break;
 		case "rtmp":
 			console.log('Recv rtmp request:', parsedMessage.message);
-			playrtmp('http://' + location.hostname + parsedMessage.message);
+			playrtmp('http://test.wenshitong.cn:7001/live/' + parsedMessage.message);
 			break;
 		default:
 			if (state == I_AM_STARTING) {
@@ -97,8 +97,6 @@ function start() {
 	});
 }
 function playrtmp(rtmpaddress) {
-
-	alert(rtmpaddress);
 	if (flvjs.isSupported()) {
 		var videoElement = document.getElementById('videoElement');
 		var flvPlayer = flvjs.createPlayer({
